@@ -19,3 +19,21 @@ a ^ (a ^ b)
 (~a) & b | (c ^ a)
 ```
 All variables with the same name are assumed to be the same. You can use any single char variables a-zA-Z.
+
+As hinted at by the filename `sve.ml`, it's based off SVE or successive variable elimination, which follows the concept that because booleans only have two possible states, then if you have
+```
+(a | b) & ~a
+```
+then one of replacing all instances of `a` with false and all instances of `a` with true must be valid, ie:
+```
+either:
+(T | b) & ~T
+or
+(F | b) & ~F
+```
+you can keep appling this till there are no more variables left, then find the one that's valid (ie evals to true), then you have:
+```
+(a | b) & ~a
+(F | T) & ~F
+```
+and it's just a matter of walking both trees and assigning generating the `a = F` and `b = T` to print out.
