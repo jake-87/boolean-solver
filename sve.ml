@@ -19,9 +19,9 @@ let rec show_bf bf =
     match bf with
     | V s -> s
     | Hard b -> string_of_bool b
-    | X(a,b) -> "(" ^ show_bf a ^ " <> " ^ show_bf b ^ ")"
-    | A(a,b) -> "(" ^ show_bf a ^ " && " ^ show_bf b ^ ")"
-    | Or(a,b) -> "(" ^ show_bf a ^ " || " ^ show_bf b ^ ")"
+    | X(a,b) -> "(" ^ show_bf a ^ " ^ " ^ show_bf b ^ ")"
+    | A(a,b) -> "(" ^ show_bf a ^ " & " ^ show_bf b ^ ")"
+    | Or(a,b) -> "(" ^ show_bf a ^ " | " ^ show_bf b ^ ")"
     | N(a) -> "(~" ^ show_bf a ^ ")"
 
 let print_bf x = print_endline (show_bf x)
