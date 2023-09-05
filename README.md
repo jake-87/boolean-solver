@@ -10,6 +10,8 @@ $ ./a.out
 ```
 or use ocamlopt if you want, I don't make the rules :P
 
+It's probably also small enough to copy paste into an online ocaml runner like `try.ocamlpro.com` if you wanted
+
 ## The language:
 
 Input is in the form of a simple little language. The program gives you an example, but for clarity here's a quick description:
