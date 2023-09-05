@@ -1,6 +1,17 @@
 # boolean-solver
 A tiny little boolean solver.
 
+## Running:
+
+If you have the ocaml compiler installed, it should just be a matter of 
+```
+$ ocamlc sve.ml
+$ ./a.out
+```
+or use ocamlopt if you want, I don't make the rules :P
+
+## The language:
+
 Input is in the form of a simple little language. The program gives you an example, but for clarity here's a quick description:
 ```
 & = and
@@ -19,6 +30,8 @@ a ^ (a ^ b)
 (~a) & b | (c ^ a)
 ```
 All variables with the same name are assumed to be the same. You can use any single char variables a-zA-Z.
+
+## How it works:
 
 As hinted at by the filename `sve.ml`, it's based off SVE or successive variable elimination, which follows the concept that because booleans only have two possible states, then if you have
 ```
