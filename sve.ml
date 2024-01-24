@@ -6,6 +6,8 @@ type bf =
     | X of bf * bf
     | N of bf
 
+let count = ref 0
+
 let rec eval bf =
     match bf with
     | V(_) -> raise Not_found
@@ -49,6 +51,7 @@ let rec find_V bf =
         | None -> find_V b
 
 let rec sve bf =
+    count := (!count) + 1;
     match find_V bf with
     | None -> bf
     | Some v ->
@@ -91,6 +94,7 @@ let simpl (a,b) (c,d) =
   String.compare a c
 
 let solver bf =
+  count := 0;
   let tm = sve bf in
   let equiv = get_equiv tm bf in
   match eval tm with
@@ -104,7 +108,7 @@ let solver bf =
 
 let explode s = List.init (String.length s) (String.get s)
 
-let join chars = 
+let join chars =
   let buf = Buffer.create 16 in
   List.iter (Buffer.add_char buf) chars;
   Buffer.contents buf
@@ -135,12 +139,12 @@ let rec parser_base c =
       N got, c
     end
   | '(' :: xs ->
-    begin 
+    begin
       let rhs, c = parser xs in
       match c with
       | ')' :: ys -> rhs, ys
       | _ -> expected c "right paren"
-    end 
+    end
   | x :: xs when (Char.code x >= 65 && Char.code x <= (65 + 26))
         || (Char.code x >= 97 && Char.code x <= (97 + 26)) ->
     V (join [x]), xs
@@ -178,11 +182,14 @@ let main () =
       match solver expr with
       | Ok(res) ->
         print_endline "One possible solution:";
-        print_endline res
+        print_endline res;
+        print_endline "Steps:";
+        print_int (!count);
+        print_newline ()
       | Error(s) ->
         print_endline s
     end; false
-    
+
 let rec mainloop () =
   match main () with
   | true -> raise End_of_file
